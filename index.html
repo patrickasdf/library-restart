@@ -8,8 +8,33 @@
     <title>Library Restart</title>
 </head>
 <body>
-    <div>Bello</div>
-    <button class="btnBooks">Add New Book</button>
+    <div class="titleDiv">Book Library!</div>
+    <button command="show-modal" commandfor="my-dialog">Add New Books</button>
+    <dialog id="my-dialog">
+        <p>Enter book details to add to library.</p>
+        <fieldset>
+            <form id="bookFormID" name="bookForm" action="#" method="post">
+                <label for="title">Title</label>
+                <input id="title" name="title" type="text"
+                    placeholder="The Hobbit"/><br>
+                <label for="author">Author</label>
+                <input id="author" name="author" type="text"
+                    placeholder="J. R. R. Tolkein"/><br>
+                <label for="pages">Pages</label>
+                <input id="pages" name="pages" type="tel"
+                    placeholder="793"/><br>
+                <p>Have you read this book?</p>
+                <input id="readYes" name="read" type="radio"
+                    value="read" checked/>
+                <label for="read">Yes</label>
+                <input id="readNo" name="read" type="radio"
+                    value="not read yet"/>
+                <label for="read">Not yet</label>
+                <button class="btnBooks" type="submit">Submit</button>
+            </form>
+        </fieldset>
+        <button class="closeBtn" commandfor="my-dialog" command="close">Close</button>
+    </dialog>
     <div class="grid-container"></div> 
 </body>
 </html>

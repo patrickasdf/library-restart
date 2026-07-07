@@ -1,4 +1,6 @@
 const myLibrary = [];
+const bookDisplay = document.querySelector(".grid-container")
+const dialog = document.querySelector("dialog")
 
 function Book(title, author, pages, read) {
     if (!new.target) {
@@ -22,3 +24,68 @@ function addBookToLibrary(title, author, pages, read) {
     myLibrary.push(newBook);
 }
 
+function btnRemoveClick() {
+    const clickedElement = event.target.closest("div");
+    if (!clickedElement) return; //function will not proceed if not attached to div
+
+    //find ID of book and match to myLibrary object, remove matching bookDisplay div
+    const targetID = clickedElement.dataset.id;
+    const matchArrayObject = myLibrary.find(book => book.idInfo() === targetID);
+    console.log("Associated data object: ", matchArrayObject);
+    bookDisplay.removeChild(clickedElement);
+
+    //find index of target book in myLibrary and splice at the position to remove
+    const objIndex = myLibrary.findIndex(book => book.idInfo() === targetID);
+    if (objIndex > -1) {
+        myLibrary.splice(objIndex, 1); 
+    }
+}
+
+function addBookButtons(thisBookDiv) {
+    //Get ID of attached book
+    const bookID = thisBookDiv.idInfo();
+    //Remove
+    const buttonRemove = document.createElement("button");
+    buttonRemove.classList.add("grid-item", "btnRemove", bookID);
+    buttonRemove.indexNumber = bookID;
+    buttonRemove.textContent = "Remove Book";
+    thisBook.appendChild(buttonRemove);
+    buttonRemove.addEventListener("click", btnRemoveClick, false);
+    //Toggle Read
+}
+
+function displayBook() {
+    //When adding new books clear existing books so page does not double up
+    while (bookDisplay.firstChild) {
+        bookDisplay.removeChild(bookDisplay.firstChild);
+    }
+    myLibrary.forEach(book => {
+        thisBook = document.createElement("div");
+        thisBook.classList.add("grid-item", book.idInfo());
+        thisBook.dataset.id = book.idInfo();
+        thisBook.textContent = book.info();
+        bookDisplay.appendChild(thisBook);
+        addBookButtons(book);
+    });
+}
+
+//<---- sample books to generate on page for testing...
+addBookToLibrary("The Hobbit", "JRR Tolkein", "1234", "not read");
+addBookToLibrary("The Lord of the Rings", "JRR Tolkein", "3345", "read")
+addBookToLibrary("The Lord of the Rings 2", "JRR Tolkein", "4345", "read")
+addBookToLibrary("The Lord of the Rings 3", "JRR Tolkein", "5345", "read")
+addBookToLibrary("The Golden Fool", "Robin Hobb", "1345", "read")
+addBookToLibrary("The Big Book", "John Bookington", "9999", "not read")
+displayBook();
+// end testing samples ---->
+
+document.getElementById("bookFormID").addEventListener("submit", function(event) {
+    event.preventDefault(); // Blocks the default form page reload\
+    const formTitle = document.forms["bookForm"]["title"].value;
+    const formAuthor = document.forms["bookForm"]["author"].value;
+    const formPages = document.forms["bookForm"]["pages"].value + " pages";
+    const formRead = document.forms["bookForm"]["read"].value;
+    addBookToLibrary((formTitle), (formAuthor), (formPages), (formRead));
+    displayBook();
+    dialog.close();
+});
