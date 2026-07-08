@@ -43,3 +43,11 @@ p {
     margin: 8px;
     display: inline-block;
 }
+
+.readStatusGreen {
+    background-color: rgba(150, 200, 150, 0.6);
+}
+
+.readStatusRed {
+    background-color: red;
+}

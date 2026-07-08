@@ -17,6 +17,9 @@ function Book(title, author, pages, read) {
     this.idInfo = function() {
         return(this.id)
     };
+    this.infoReadStatus = function () {
+        return(this.read)
+    };
 }
 
 Book.prototype.toggleRead = function() {
@@ -92,6 +95,11 @@ function displayBook() {
         thisBook.classList.add("grid-item", book.idInfo());
         thisBook.dataset.id = book.idInfo();
         thisBook.textContent = book.info();
+        console.log(book.infoReadStatus())
+        if (book.infoReadStatus() == "read") {
+            thisBook.classList.add("readStatusGreen");
+        }        
+        else thisBook.classList.add("readStatusRed");
         bookDisplay.appendChild(thisBook);
         addBookButtons(book);
     });
