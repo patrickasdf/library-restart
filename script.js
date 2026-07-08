@@ -19,9 +19,32 @@ function Book(title, author, pages, read) {
     };
 }
 
+Book.prototype.toggleRead = function() {
+    if (this.read == "read") {
+        this.read = "not read yet";
+        return;
+    }
+    else return this.read = "read";
+}
+
 function addBookToLibrary(title, author, pages, read) {
     const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
+}
+
+function btnToggleRead() {
+    const clickedElement = event.target.closest("div")
+    if (!clickedElement) return;
+    
+    //find ID of book, match to array obj, call toggleRead proto function, 
+    //      update textcontent and obj data for read
+    const targetID = clickedElement.dataset.id;
+    const matchArrayObject = myLibrary.find(book => book.idInfo() === targetID);
+    const objIndex = myLibrary.findIndex(book => book.idInfo() === targetID);
+        if (objIndex > -1) {
+        myLibrary[objIndex].toggleRead();
+        displayBook();
+    }
 }
 
 function btnRemoveClick() {
@@ -31,7 +54,6 @@ function btnRemoveClick() {
     //find ID of book and match to myLibrary object, remove matching bookDisplay div
     const targetID = clickedElement.dataset.id;
     const matchArrayObject = myLibrary.find(book => book.idInfo() === targetID);
-    console.log("Associated data object: ", matchArrayObject);
     bookDisplay.removeChild(clickedElement);
 
     //find index of target book in myLibrary and splice at the position to remove
@@ -52,6 +74,12 @@ function addBookButtons(thisBookDiv) {
     thisBook.appendChild(buttonRemove);
     buttonRemove.addEventListener("click", btnRemoveClick, false);
     //Toggle Read
+    const buttonToggleRead = document.createElement("button");
+    buttonToggleRead.classList.add("grid-item", "btnToggleRead", bookID);
+    buttonToggleRead.indexNumber = bookID;
+    buttonToggleRead.textContent = "Toggle Read Status";
+    thisBook.appendChild(buttonToggleRead);
+    buttonToggleRead.addEventListener("click", btnToggleRead, false);
 }
 
 function displayBook() {
@@ -79,6 +107,7 @@ addBookToLibrary("The Big Book", "John Bookington", "9999", "not read")
 displayBook();
 // end testing samples ---->
 
+//Get dialog form input and put into array and then display on page
 document.getElementById("bookFormID").addEventListener("submit", function(event) {
     event.preventDefault(); // Blocks the default form page reload\
     const formTitle = document.forms["bookForm"]["title"].value;
