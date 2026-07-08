@@ -1,4 +1,5 @@
 body {
+    padding: 10px;
     background-color: rgba(100, 100, 100, 0.6);
     text-align: center;
 }
@@ -6,6 +7,7 @@ body {
 button {
     font-size: 1.1rem;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .closeBtn {
@@ -24,15 +26,20 @@ p {
 }
 
 .grid-item {
-    background-color: rgba(150, 200, 150, 0.6);
+    background-color: rgba(150, 200, 200, 0.6);
     border: 1px dotted black;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
 }
 
 .titleDiv {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
 }
 
 .btnRemove, .btnToggleRead {
@@ -49,5 +56,5 @@ p {
 }
 
 .readStatusRed {
-    background-color: red;
+    background-color: rgba(200, 100, 100, 0.7);
 }
